@@ -153,7 +153,7 @@ app.post('/api/clicks', function(req, res){
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordClicks({result, username, currentUrl, redirectUrl}).save();
+    new recordClicks({timestamp:result, username, currentUrl, redirectUrl}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
@@ -173,7 +173,7 @@ app.post('/api/favorite', function(req, res){
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordFavorite({result, username, favoriteUrl, favoriteQuestion}).save();
+    new recordFavorite({timestamp:result, username, favoriteUrl, favoriteQuestion}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
@@ -193,7 +193,7 @@ app.post('/api/scroll', function(req, res){
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordScroll({result, username, scrollPercentage, scrollUrl}).save();
+    new recordScroll({timestamp:result, username, scrollPercentage, scrollUrl}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
@@ -212,7 +212,7 @@ app.post('/api/search', function(req, res){
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordSearch({result, username, searchUrl}).save();
+    new recordSearch({timestamp:result, username, searchUrl}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
@@ -231,7 +231,7 @@ app.post('/api/copy', function(req, res){
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordCopy({result, username, copyUrl}).save();
+    new recordCopy({timestamp:result, username, copyUrl}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
