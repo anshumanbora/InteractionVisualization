@@ -144,11 +144,16 @@ app.post('/api/clicks', function(req, res){
   var timestamp = req.body.timestamp;
   var currentUrl = req.body.currentUrl;
   var redirectUrl = req.body.redirectUrl;
-  var user = '';
+  var result="";
+  var d = new Date();
+  result += d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate() +
+            " "+ d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+            +" "+d.getMilliseconds();
+
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordClicks({timestamp, username, currentUrl, redirectUrl}).save();
+    new recordClicks({result, username, currentUrl, redirectUrl}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
@@ -159,11 +164,16 @@ app.post('/api/favorite', function(req, res){
   var timestamp = req.body.timestamp;
   var favoriteUrl = req.body.favoriteUrl;
   var favoriteQuestion = req.body.favoriteQuestion;
-  var user = '';
+  var result="";
+  var d = new Date();
+  result += d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate() +
+            " "+ d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+            +" "+d.getMilliseconds();
+
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordFavorite({timestamp, username, favoriteUrl, favoriteQuestion}).save();
+    new recordFavorite({result, username, favoriteUrl, favoriteQuestion}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
@@ -174,11 +184,16 @@ app.post('/api/scroll', function(req, res){
   var timestamp = req.body.timestamp;
   var scrollPercentage = req.body.scrollPercentage;
   var scrollUrl = req.body.scrollUrl;
-  var user = '';
+  var result="";
+  var d = new Date();
+  result += d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate() +
+            " "+ d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+            +" "+d.getMilliseconds();
+
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordScroll({timestamp, username, scrollPercentage, scrollUrl}).save();
+    new recordScroll({result, username, scrollPercentage, scrollUrl}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
@@ -188,11 +203,16 @@ app.post('/api/search', function(req, res){
   console.log('search api called');
   var timestamp = req.body.timestamp;
   var searchUrl = req.body.searchUrl;
-  var user = '';
+  var result="";
+  var d = new Date();
+  result += d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate() +
+            " "+ d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+            +" "+d.getMilliseconds();
+
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordSearch({timestamp, username, searchUrl}).save();
+    new recordSearch({result, username, searchUrl}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
@@ -202,11 +222,16 @@ app.post('/api/copy', function(req, res){
   console.log('copy api called');
   var timestamp = req.body.timestamp;
   var copyUrl = req.body.copyUrl;
-  var user = '';
+  var result="";
+  var d = new Date();
+  result += d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate() +
+            " "+ d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+            +" "+d.getMilliseconds();
+
   currentUser.findOne({uselessID:'uselessID'}, function(err, res){
     username = res.username;
     //console.log('res='+res);
-    new recordCopy({timestamp, username, copyUrl}).save();
+    new recordCopy({result, username, copyUrl}).save();
   });
   //console.log('current user found:'+user+ '\nother stuff: '+timestamp+currentUrl+redirectUrl);
 
