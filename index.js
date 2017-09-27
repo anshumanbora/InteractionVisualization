@@ -239,7 +239,7 @@ app.post('/api/copy', function(req, res){
 
 
 
-app.get('/api/getsomething', async function(req, res){
+app.get('/api/userlogs', async function(req, res){
   //var dummy = [ {key:1,value:'one'},{key:2, value:'two'}];
 
   const exUser = await currentUser.findOne({uselessID:'uselessID'});
@@ -249,11 +249,13 @@ app.get('/api/getsomething', async function(req, res){
       //console.log('current user 123123123 '+username);
       const logs = await userLogs.find({username:username});
       //console.log(logs);
-      var time = logs.map(function(x){
-         return x.timestamp;
+       //var data = [];
+       var time = logs.map(function(x){
+          return x.timestamp.substring(0,8);
        });
-       //console.log(time);
-       res.send(time);
+
+
+        res.send(time);
   }
   else{
     res.send('user Not found')
@@ -270,9 +272,12 @@ app.get('/api/getcurrentuser', async function(req, res){
   //console.log('\nCCCCurrent user'+cuser.username);
   res.send(cuser.username);
 
-
-
 });
+
+
+
+
+
 
 //----Production stuff----
 if(process.env.NODE_ENV == 'production'){

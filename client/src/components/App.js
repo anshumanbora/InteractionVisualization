@@ -10,25 +10,7 @@ import LoginError from './LoginError';
 
 const App = () =>{
   return(
-    <div id="container">
-      <BrowserRouter>
-        <div >
-          <div id="header">
-          < Header/>
-          </div>
-          <div id="body">
-            <Route exact={true} path= "/" component = {Welcome} />
-            <Route exact={true} path= "/login" component = {Login} />
-            <Route exact={true} path= "/register" component = {Register} />
-            <Route exact={true} path= "/userlogs" component = {UserLogs} />
-            <Route exact={true} path= "/errorlogin" component = {LoginError} />
-            <Route exact={true} path= "/registererror" component = {RegisterError} />
-          </div>
-          <div ></div>
-        </div>
-      </BrowserRouter>
-
-    </div>
+    <div></div>
   )
 }
 
