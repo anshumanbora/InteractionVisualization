@@ -31,3 +31,116 @@ body {
     background:black;
 }
 
+select{
+    height: 29px;
+    overflow: hidden;
+    width: 150px;
+    margin-left: 100px;
+}
+
+
+.parent{
+    margin: 30px;
+}
+
+.motivation{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.interactions{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.patterns{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.method{
+
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.scatterchart{
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 100px;
+}
+
+#tagdetails{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: cornflowerblue;
+    color: white;
+    font-size: medium;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.piechart{
+    margin-top: 100px;
+}
+#calendar_basic{
+    margin-left: 100px;
+ }
+
+h5{
+    font-weight:bold;
+    margin-left: 100px;
+}
+
+.color1{
+    background-color: lightcyan;
+    padding: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+
+}
+
+
+.color2{
+    background-color: lightcyan;
+    padding: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+
+}
+
+.color3{
+    background-color: lightcyan;
+    padding: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+
+}
+
+h4{
+    font-weight: bold;
+}
+
+.header{
+
+    margin-bottom: 50px;
+    color:goldenrod;
+    width: auto;
+    height: auto;
+    background-color: black;
+    overflow:auto;
+}
+
+.title{
+ font-family: "Arial Black";
+    font-size: large;
+ margin-bottom: 50px;
+    margin-top: 100px;
+}
+
+.personalinfo{
+    margin-top: 50px;
+
+}

@@ -113,7 +113,7 @@ function drawChart() {
 
     var options = {
         title: selectedUser+" Log Frequency",
-        height: 350,
+        height: 250,
     };
 
     chart.draw(dataTable, options);
@@ -188,11 +188,11 @@ function drawLinks() {
     ]);
 
     var options = {
-        title: 'Inside vs Outside',
+        title: 'Within vs Outside Stackoverflow: '+selectedUser,
         pieHole: 0.2,
     };
     var optionsall = {
-        title: 'Inside vs Outside: Overall',
+        title: 'Within vs Outside Stackoverflow: All Users',
         pieHole: 0.2,
     };
 
@@ -264,8 +264,8 @@ google.charts.setOnLoadCallback(drawScatter);
 function drawScatter () {
 
     var data = new google.visualization.DataTable();
-    data.addColumn('string', 'tag');
-    data.addColumn('number', 'occurence');
+    data.addColumn('string', 'Tag Name');
+    data.addColumn('number', 'tag count');
 
     for(key in obj){
 
@@ -281,7 +281,7 @@ function drawScatter () {
         width: 1000,
         height: 300,
         chart: {
-            title: 'weight of terms'
+            title: 'Frequency of Tags'
         },
         axes: {
             x: {
@@ -365,7 +365,7 @@ function drawScatter () {
         console.log('You selected ' + message);
 
         var div = document.getElementById('tagdetails');
-        div.innerHTML='';
+        div.innerHTML='Users with similar interest: ';
 
         for (var i=0; i<allUser.length; i++){
 

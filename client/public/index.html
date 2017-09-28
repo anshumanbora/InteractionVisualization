@@ -36,43 +36,198 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Social Visualizations</title>
   </head>
   <body >
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root">root</div>
-
-    <div class="row">
-
-        <div class="col-lg-2 calender">
-            <select id="mySelect" onchange="selectUser()">
-              <option>Select User</option>
-            </select>
+    <div class=" header">
+        <div class="col-lg-6">
+        <h2>Social Visualizations</h2>
+        <h5>CSE - 591 | Adaptive Web</h5>
         </div>
-
-        <div class="col-lg-10" id="calendar_basic">Calender
-        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-4 personalinfo">Anshuman Bora | 1211247437 | abora3@asu.edu</div>
 
     </div>
 
-    <div class="">
-      <div class="piechart">
-        <select id="mySelect2" onchange="selectUser2()">
-          <option>Select User</option>
-        </select>
-      </div>
-      <div class="row">Pie Chart
-          <div class="col-lg-6" id="donutchart" style="width: 600px; height: 300px;">
+    <div class="parent">
+
+        <div class="row">
+            <div class="title text-center">Temporal Visualization of User Activities
+            </div>
+
+
+            <div  id="calendar_basic">
+            </div>
+            <h5>Select user</h5>
+            <div class="calender">
+                <select id="mySelect" onchange="selectUser()">
+                    <option></option>
+                </select>
+            </div>
+            <div class="color1">
+            <div class="motivation"><h4>Motivation</h4>
+            <p>The motivation behind this visualization is that by only studying a user's activity over a period of time
+                we can truly ascertain the effort an user puts into his work.
+            </p>
+            </div>
+
+            <div class="interactions"><h4>Interactions</h4>
+                On hovering on a particular day, we can see that count of logs made by the user on that day.
+                One can view any user's activity by selecting from a drop-down list of available users.
+            </div>
+
+            <div class="patterns">
+                <h4>Analysis of Patterns</h4>
+
+                <li>
+                    A cursory analysis of any of the user's timeline yields that generally the user
+                    activity is sporadic and not steady over a stretch of time.
+                </li>
+                <li>
+                    It is observed that if users are highly active on a particular day, they tend to remain active during the days
+                    leading upto that day and the activity decreases as we move pass that day.
+                </li>
+                <li>
+                    The days when the users log maximum activity could potentially suggest important events like project deadlines.
+                    Alternatively it could also suggest that they are putting in extra efforts to find solution to a tough problem.
+                </li>
+
+            </div>
+            <div class="method"> <h4>Method</h4>
+                To generate this graph, timestamps of user log-ins were recorded over a period of days. Then for every user
+                the total number of times he/she logged into the applications is recorded, for each day days. Corresponding
+                values for each date was plotted on the calendar-graph to accomplish this visualization.
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+            <div class="title text-center">Navigational Visualization
+            </div>
+
+            <div class="piechart">
+
+          <div class="row">
+              <div class="col-lg-6" id="donutchart" style="width: 600px; height: 300px;">
+              </div>
+              <div class="col-lg-6" id="donutchartall" style="width: 600px; height: 300px;">
+              </div>
+
           </div>
-          <div class="col-lg-6" id="donutchartall" style="width: 600px; height: 300px;">
+              <h5>Select user here</h5>
+              <select id="mySelect2" onchange="selectUser2()">
+                  <option></option>
+              </select>
+
           </div>
-      </div>
+        <div class="color2">
+            <div class="motivation"><h4>Motivation</h4>
+                <p>It is very difficulty to determine if a user is successful in finding a solution to their problems after
+                    visiting a site. The analysis of navigational data of users on a website gives another metric to measure
+                    the success of the site.
+                </p>
+            </div>
+
+            <div class="interactions"><h4>Interactions</h4>
+                On hovering over a particular slice of the pie chart, we can view tha count and the percentage
+                sites visited by the user.
+                One can view any user's activity by selecting from a drop-down list of available users.
+            </div>
+
+            <div class="patterns"><h4>Analysis of Patterns</h4>
+
+
+                <li>While searching for solutions on stackoverflow, users overwhelmingly tend to search for
+                    answers within stackoverflow. This could suggest that stackoverflow has enough resources to
+                    pacify the users quest for solution to their problems.
+                </li>
+                <li>It is seen that on an average only about a fourth of the links clicked by the users take
+                    them away from stackoverflow to some other site. This might suggest that the number of links taking a user
+                    outside the domain of stackoverflow are way lesser, compared to the links which take the users to
+                    another section of stackoverlflow.
+                </li>
+                <li>It is observed that the distribution of share of links accessed might be skewed when
+                    the interactions are lower, but as the user interactions increases with stackoverflow,
+                    the values become stable and tend to settle in a range where 70%  of the links takes the
+                    user somewhere whithin stackoverflow.
+
+                </li>
+
+
+            </div>
+            <div class="method"><h4>Method</h4>
+                Every time the users navigated to a different page, the urls were recorded along-with the information if
+                they are moving away from or within stackoverflow. Then these recordings were visualized in the form of two
+                pie-charts for a clear view of the division.
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+    <div class="title text-center">User Interests Visualization Using Tags
     </div>
 
-    <div id='scatter_top_x'></div>
-    <div id="tagdetails"></div>
+        <div class="scatterchart">
+        <div id='scatter_top_x'></div>
+        <div id="tagdetails">Users with similar interest: </div>
+        </div>
+        <div class="color3">
+        <div class="motivation"><h4>Motivation</h4>
+            <p>Tags are one the most important feature which helps us in determining the interest of the user. Tags can
+                explicitly help define the profile of an user by showing us the domains in which the users are working. Also
+                by finding common tags accessed by the users we can find user having similar interests.
+            </p>
+        </div>
+
+
+        <div class="interactions"><h4>Interactions</h4>
+            On hovering over a particular data-point(tag) on the graph, we can view tha name as well as the number of times
+            that tag was asscessed by all the users.
+            By clicking on a data-point(tag), we can see all the users who have come across that particular tag.
+        </div>
+
+        <div class="patterns"><h4>Analysis of Patterns</h4>
+
+            <li>It is observed that majority of the tags encountered by the users deals with concepts which
+                are used in widely in real-life, for example 'javascript' which is one of the highest encountered
+                tags, is a very common language.
+            </li>
+            <li>
+                If we look at the top most tags encountered, it can be observed that they are related to each other
+                , for example 'ajax' calls are frequently used in 'javascript'.
+            </li>
+            <li>
+                The users which have similar tags associated with them are most probably working on similar projects
+                or maybe they have similar interests.
+            </li>
+
+
+        </div>
+
+        <div class="method"><h4>Method</h4>
+            Every time the users navigated to a new page or they search for something, the tags related to that page were recorder for every user. Then
+            a overall occurrence of the tags, for all users, was determined. Then these values were plotted on a scatter chart to get
+            a clearer understanding of the frequencies of the tags. Also users who had previously accessed the same tags are shown.
+
+        </div>
+    </div>
+
 
 
     <!--
