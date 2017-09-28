@@ -57,6 +57,13 @@ const userLogs = new Schema({
 
 });
 
+const recordTags = new Schema({
+  timestamp: String,
+  username: String,
+  tags: String
+
+});
+
 
 mongoose.model('users', userSchema);
 mongoose.model('currentUser', currentUser);
@@ -66,3 +73,4 @@ mongoose.model('recordScroll', recordScroll);
 mongoose.model('recordSearch', recordSearch);
 mongoose.model('recordCopy', recordCopy);
 mongoose.model('userLogs', userLogs);
+mongoose.model('recordTags', recordTags);

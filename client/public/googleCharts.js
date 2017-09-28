@@ -1,3 +1,9 @@
+
+google.charts.load("current", {packages:["calendar","corechart","controls","scatter"]});
+
+
+
+
 var allUsers = $.ajax({
     url: "/api/getallusers",
     dataType: "json",
@@ -10,11 +16,11 @@ allUser = JSON.parse(allUsers);
 var select = document.getElementById("mySelect");
 
 for (var i=0;i<allUser.length; i++){
-    var opt = allUser[i];
-    var el = document.createElement("option");
-    el.textContent = opt;
-    el.value = opt;
-    select.appendChild(el);
+     var opt = allUser[i];
+     var el = document.createElement("option");
+     el.textContent = opt;
+     el.value = opt;
+     select.appendChild(el);
 }
 
 var selectedUser = '';
@@ -50,9 +56,6 @@ function selectUser2() {
 
 }
 
-
-
-google.charts.load("current", {packages:["calendar","corechart"]});
 
 function drawChart() {
 
@@ -200,3 +203,208 @@ function drawLinks() {
     chart.draw(dataall, optionsall);
 
 }
+
+
+
+var tags = $.ajax({
+    url: "/api/gettags",
+    dataType: "json",
+    async: false
+}).responseText;
+
+//console.log(tags);
+var tags = JSON.parse(tags);
+
+//google.charts.setOnLoadCallback(drawDashboard);
+//console.log(tags);
+var obj ={};
+var userTags = {};
+for (var j=0; j<allUser.length; j++){
+
+    userTags[allUser[j]]=[];
+
+    for (var i=0; i<tags.length; i++){
+        //console.log(allUsers);
+        if (allUser[j] == tags[i].substring(0,3)) {
+            //console.log(tags[i].substring(0, 3));
+
+            var element = tags[i].replace(allUser[j],"");
+
+            arrayElement = element.split(",");
+
+            //console.log(arrayElement);
+            for (var k=0; k<arrayElement.length; k++){
+                if(userTags[allUser[j]].indexOf(arrayElement[k]) == -1){
+                    userTags[allUser[j]].push(arrayElement[k]);
+                    //console.log(arrayElement[k]);
+                }
+                //userTags[allUsers[j]]+=obj[arrayElement[k]];
+
+
+
+                if (obj[arrayElement[k]]) {
+                    obj[arrayElement[k]]++;
+                }
+                else {
+                    obj[arrayElement[k]] = 1;
+                }
+            }
+
+        }
+    }
+
+}
+
+for (key in userTags){
+    //console.log(key+' : '+userTags[key]);
+}
+
+google.charts.setOnLoadCallback(drawScatter);
+
+function drawScatter () {
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'tag');
+    data.addColumn('number', 'occurence');
+
+    for(key in obj){
+
+        data.addRows([
+            // ['word1', 1] , ['word2', 3]
+            [key,obj[key]]
+        ]);
+
+    }
+
+
+    var options = {
+        width: 1000,
+        height: 300,
+        chart: {
+            title: 'weight of terms'
+        },
+        axes: {
+            x: {
+                0: {side: 'bottom'}
+            }
+        }
+    };
+
+    var chart = new google.charts.Scatter(document.getElementById('scatter_top_x'));
+
+    chart.draw(data, google.charts.Scatter.convertOptions(options));
+
+    //adding event listener
+    //google.visualization.events.addListener(chart, 'select', selectionHandler);
+
+
+
+    google.visualization.events.addListener(chart,'select', function(e) {
+        var selection = chart.getSelection();
+        var lat = data.getValue(selection[0].row, 0); // HERE is where I get the value!
+        var lon = data.getValue(selection[0].row, 1);
+        //alert(lat + ", " + lon);
+
+        var div = document.getElementById('tagdetails');
+        div.innerHTML='';
+        for (var i=0; i<allUser.length; i++){
+
+
+        if(userTags[allUser[i]].indexOf(lat) != -1){
+
+            console.log(userTags[allUser[i]]);
+            div.innerHTML += allUser[i];
+
+        }
+
+
+    }
+
+
+
+    });
+    // function selectionHandler() {
+    //     var selection = chart.getSelection();
+    //     var message = '';
+    //     for (var i = 0; i < selection.length; i++) {
+    //         var item = selection[i];
+    //         console.log(data.getValue(item.row, item.column));
+    //         if (item.row != null && item.column != null) {
+    //             //var str = data.getFormattedValue(item.row, item.column);
+    //             var str = data.getColumnLabel(item.column);
+    //             message += '{row:' + item.row + ',column:' + item.column + '} = ' + str + '\n';
+    //         } else if (item.row != null) {
+    //             //var str = data.getFormattedValue(item.row, 0);
+    //             var str = data.getColumnLabel(item.row,0);
+    //             message += '{row:' + item.row + ', column:none}; value (col 0) = ' + str + '\n';
+    //         } else if (item.column != null) {
+    //             //var str = data.getFormattedValue(0, item.column);
+    //             var str = data.getColumnLabel(0,item.column);
+    //             message += '{row:none, column:' + item.column + '}; value (row 0) = ' + str + '\n';
+    //         }
+    //     }
+    //     if (message == '') {
+    //         message = 'nothing';
+    //     }
+    //     alert('You selected ' + message);
+    // }
+
+
+}
+
+
+// function drawDashboard() {
+//     // Everything is loaded. Assemble your dashboard...
+//
+//     var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));
+//     // Create a range slider, passing some options
+//     var donutRangeSlider = new google.visualization.ControlWrapper({
+//         'controlType': 'NumberRangeFilter',
+//         'containerId': 'filter_div',
+//         'options': {
+//             'filterColumnLabel': 'Year',
+//             'minValue': 2004,
+//             'maxValue': 2011
+//         }
+//     });
+//
+//     var data = google.visualization.arrayToDataTable([
+//         ['Year', 'Sales', 'Expenses'],
+//         [2004,  1000,      400],
+//         [2005,  1170,      460],
+//         [2006,  660,       1120],
+//         [2007,  1030,      540],
+//         [2008,  1000,      600],
+//         [2009,  1170,      460],
+//         [2010,  660,       1120],
+//         [2011,  1030,      1540]
+//     ]);
+//
+//     var options = {
+//         title: 'Company Performance',
+//         curveType: 'function',
+//         legend: { position: 'bottom' }
+//     };
+//
+//     var chart = new google.visualization.ChartWrapper({
+//         'chartType': 'LineChart',
+//         'containerId': 'chart_div',
+//         'options': {
+//             'width': 700,
+//             'height': 300,
+//             'legend': 'none',
+//
+//         }
+//
+//     });
+//
+//
+//     // The rest of dashboard configuration follows
+//     // ...
+//     dashboard.bind(donutRangeSlider, chart);
+//     dashboard.draw(data);
+// }
+
+
+//--------------------D3------------------------
+

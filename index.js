@@ -17,7 +17,7 @@ const recordScroll = mongoose.model('recordScroll');
 const recordFavorite = mongoose.model('recordFavorite');
 const recordSearch = mongoose.model('recordSearch');
 const recordCopy = mongoose.model('recordCopy');
-
+const recordTags = mongoose.model('recordTags');
 
 
 app.use(bodyParser.json());
@@ -295,10 +295,51 @@ app.get('/api/clicklinks', async function(req, res){
       }
 
       console.log(searchDictionary);
-      var x = [123,222,434];
+
       res.send(searchDictionary);
 
 });
+
+app.get('/api/gettags', async function(req,res){
+
+  const alltags = await recordTags.find();
+  if(alltags){
+    tags = alltags.map(function(x){
+      console.log(x.tags);
+      return x.username+x.tags;
+
+     });
+     res.send(tags);
+  }
+  else{
+    res.send('error');
+  }
+
+});
+
+app.get('/api/allinteractions', async function(req,res){
+
+  const clicks = await recordClicks.find();
+  const search = await recordSearch.find();
+  const scrolls = await recordScroll.find();
+  const user = await User.find();
+
+
+  if(user){
+
+      user.map(function(x){
+      return x.tags;
+
+     });
+     res.send("success");
+  }
+  else{
+    res.send('error');
+  }
+
+});
+
+
 
 
 app.get('/api/getallusers', async function(req, res){
@@ -307,7 +348,7 @@ app.get('/api/getallusers', async function(req, res){
 
 
       var result = allusers.map(function(x){
-        return x.username
+        return x.username;
       });
       //console.log(result);
       res.send(result);
@@ -324,7 +365,6 @@ app.get('/api/getcurrentuser', async function(req, res){
   res.send(cuser.username);
 
 });
-
 
 
 
