@@ -133,12 +133,6 @@ app.post('/api/login', function(req, res){
 
 
 
-
-
-
-
-
-
 app.post('/api/clicks', function(req, res){
   console.log('clicks api called');
   var timestamp = req.body.timestamp;
@@ -240,32 +234,89 @@ app.post('/api/copy', function(req, res){
 
 
 app.get('/api/userlogs', async function(req, res){
-  //var dummy = [ {key:1,value:'one'},{key:2, value:'two'}];
+  const logs = await userLogs.find();
+  var time = logs.map(function(x){
 
-  const exUser = await currentUser.findOne({uselessID:'uselessID'});
-  if(exUser)
-  {
-      var username=exUser.username;
-      //console.log('current user 123123123 '+username);
-      const logs = await userLogs.find({username:username});
-      //console.log(logs);
-       //var data = [];
-       var time = logs.map(function(x){
-          return x.timestamp.substring(0,8);
-       });
+     console.log(x.username);
+      return x.username+'*'+x.timestamp.substring(0,9);
+   });
+   res.send(time);
 
-
-        res.send(time);
-  }
-  else{
-    res.send('user Not found')
-  }
-  //res.send(dummy);
-  //console.log('putside '+timeee);
-  //console.log('\n\ngetsomething ends\n\n');
-  //res.render('error', { error: err })
 });
 
+
+
+
+app.get('/api/clicklinks', async function(req, res){
+
+      var searchDictionary ={};
+      //searching for users and making keys for our dictionary
+      //console.log("Api called");
+      const users = await User.find();
+      //console.log(users);
+      if (users){
+            //console.log('inside if');
+
+            users.map(function(x){
+               //console.log(x.username);
+               searchDictionary['inside'+x.username]=0;
+               searchDictionary['outside'+x.username]=0;
+             });
+              searchDictionary['all-inside']=0;
+              searchDictionary['all-outside']=0;
+
+            //console.log(searchDictionary);
+            //res.send('Heyo');
+            const clicks = await recordClicks.find();
+            if(clicks){
+              //console.log(clicks);
+                clicks.map( function(x){
+                  if(x.redirectUrl.substring(0,4)=="http"){
+                      //console.log('outside '+x.redirectUrl);
+                      searchDictionary['outside'+x.username]+=1;
+                      searchDictionary['all-outside']+=1;
+                  }
+                  else{
+                      //console.log('inside '+x.redirectUrl);
+                      searchDictionary['inside'+x.username]+=1;
+                      searchDictionary['all-inside']+=1;
+                  }
+
+                });
+
+            }
+            else {
+              res.send('error');
+            }
+         }
+      else{
+        //console.log("error");
+        res.send('Failo');
+      }
+
+      console.log(searchDictionary);
+      var x = [123,222,434];
+      res.send(searchDictionary);
+
+});
+
+
+app.get('/api/getallusers', async function(req, res){
+    const allusers = await User.find();
+    if(allusers){
+
+
+      var result = allusers.map(function(x){
+        return x.username
+      });
+      //console.log(result);
+      res.send(result);
+    }
+    else{
+      res.send('error');
+    }
+
+});
 
 app.get('/api/getcurrentuser', async function(req, res){
   cuser = await currentUser.findOne({uselessID:'uselessID'});

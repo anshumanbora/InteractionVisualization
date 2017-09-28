@@ -31,4 +31,11 @@ body {
     background:black;
 }
 
+.calender{
+    padding: 20px;
+}
 
+.vspace {
+    position: relative;
+    margin-top: 200px;
+}
