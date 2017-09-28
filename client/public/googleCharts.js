@@ -1,7 +1,7 @@
 
 google.charts.load("current", {packages:["calendar","corechart","controls","scatter"]});
-
-
+google.charts.setOnLoadCallback(drawChart);
+google.charts.setOnLoadCallback(drawLinks);
 
 
 var allUsers = $.ajax({
@@ -294,117 +294,94 @@ function drawScatter () {
 
     chart.draw(data, google.charts.Scatter.convertOptions(options));
 
+
+
+    // google.visualization.events.addListener(chart,'select', function(e) {
+    //     var selection = chart.getSelection();
+    //
+    //     //console.log(selection);
+    //     if (data.getValue(selection[0].row, 0) == '');
+    //     {
+    //         return false;
+    //     }
+    //
+    //     var lat = data.getValue(selection[0].row, 0); // HERE is where I get the value!
+    //     var lon = data.getValue(selection[0].row, 1);
+    //     //alert(lat + ", " + lon);
+    //
+    //     //if(lat)
+    //
+    //     var div = document.getElementById('tagdetails');
+    //     div.innerHTML='';
+    //
+    //     for (var i=0; i<allUser.length; i++){
+    //
+    //         if(userTags[allUser[i]].indexOf(lat) != -1){
+    //
+    //             div.innerHTML += allUser[i]+' ';
+    //
+    //         }
+    //     }
+    //
+    //     console.log(div.innerHTML);
+    //
+    //
+    //
+    // });
+
     //adding event listener
-    //google.visualization.events.addListener(chart, 'select', selectionHandler);
+    google.visualization.events.addListener(chart, 'select', selectionHandler);
 
 
-
-    google.visualization.events.addListener(chart,'select', function(e) {
+    function selectionHandler() {
         var selection = chart.getSelection();
-        var lat = data.getValue(selection[0].row, 0); // HERE is where I get the value!
-        var lon = data.getValue(selection[0].row, 1);
-        //alert(lat + ", " + lon);
+        var message = '';
+        for (var i = 0; i < selection.length; i++) {
+            var item = selection[i];
+            //console.log(data.getValue(item.row, item.column));
+            if (item.row != null && item.column != null) {
+                //var str = data.getFormattedValue(item.row, item.column);
+                //var str = data.getColumnLabel(item.column);
+                var str = data.getValue(selection[0].row, 0);
+                //message += '{row:' + item.row + ',column:' + item.column + '} = ' + str + '\n';
+                message+=str;
+            } else if (item.row != null) {
+                //var str = data.getFormattedValue(item.row, 0);
+                //var str = data.getColumnLabel(item.row,0);
+                var str = data.getValue(selection[0].row, 0);
+                //message += '{row:' + item.row + ', column:none}; value (col 0) = ' + str + '\n';
+                message+=str;
+            } else if (item.column != null) {
+                //var str = data.getFormattedValue(0, item.column);
+                //var str = data.getColumnLabel(0,item.column);
+                var str = data.getValue(selection[0].row, 0);
+                //message += '{row:none, column:' + item.column + '}; value (row 0) = ' + str + '\n';
+                message+=str;
+            }
+        }
+        if (message == '') {
+            message = 'nothing';
+        }
+        console.log('You selected ' + message);
 
         var div = document.getElementById('tagdetails');
         div.innerHTML='';
+
         for (var i=0; i<allUser.length; i++){
 
+            if(userTags[allUser[i]].indexOf(message) != -1){
 
-        if(userTags[allUser[i]].indexOf(lat) != -1){
+                div.innerHTML += allUser[i]+' ';
 
-            console.log(userTags[allUser[i]]);
-            div.innerHTML += allUser[i];
-
+            }
         }
+
+        console.log(div.innerHTML);
+
 
 
     }
 
 
-
-    });
-    // function selectionHandler() {
-    //     var selection = chart.getSelection();
-    //     var message = '';
-    //     for (var i = 0; i < selection.length; i++) {
-    //         var item = selection[i];
-    //         console.log(data.getValue(item.row, item.column));
-    //         if (item.row != null && item.column != null) {
-    //             //var str = data.getFormattedValue(item.row, item.column);
-    //             var str = data.getColumnLabel(item.column);
-    //             message += '{row:' + item.row + ',column:' + item.column + '} = ' + str + '\n';
-    //         } else if (item.row != null) {
-    //             //var str = data.getFormattedValue(item.row, 0);
-    //             var str = data.getColumnLabel(item.row,0);
-    //             message += '{row:' + item.row + ', column:none}; value (col 0) = ' + str + '\n';
-    //         } else if (item.column != null) {
-    //             //var str = data.getFormattedValue(0, item.column);
-    //             var str = data.getColumnLabel(0,item.column);
-    //             message += '{row:none, column:' + item.column + '}; value (row 0) = ' + str + '\n';
-    //         }
-    //     }
-    //     if (message == '') {
-    //         message = 'nothing';
-    //     }
-    //     alert('You selected ' + message);
-    // }
-
-
 }
-
-
-// function drawDashboard() {
-//     // Everything is loaded. Assemble your dashboard...
-//
-//     var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));
-//     // Create a range slider, passing some options
-//     var donutRangeSlider = new google.visualization.ControlWrapper({
-//         'controlType': 'NumberRangeFilter',
-//         'containerId': 'filter_div',
-//         'options': {
-//             'filterColumnLabel': 'Year',
-//             'minValue': 2004,
-//             'maxValue': 2011
-//         }
-//     });
-//
-//     var data = google.visualization.arrayToDataTable([
-//         ['Year', 'Sales', 'Expenses'],
-//         [2004,  1000,      400],
-//         [2005,  1170,      460],
-//         [2006,  660,       1120],
-//         [2007,  1030,      540],
-//         [2008,  1000,      600],
-//         [2009,  1170,      460],
-//         [2010,  660,       1120],
-//         [2011,  1030,      1540]
-//     ]);
-//
-//     var options = {
-//         title: 'Company Performance',
-//         curveType: 'function',
-//         legend: { position: 'bottom' }
-//     };
-//
-//     var chart = new google.visualization.ChartWrapper({
-//         'chartType': 'LineChart',
-//         'containerId': 'chart_div',
-//         'options': {
-//             'width': 700,
-//             'height': 300,
-//             'legend': 'none',
-//
-//         }
-//
-//     });
-//
-//
-//     // The rest of dashboard configuration follows
-//     // ...
-//     dashboard.bind(donutRangeSlider, chart);
-//     dashboard.draw(data);
-// }
-
-
-//--------------------D3------------------------
 
